@@ -29,3 +29,5 @@ If download fails: set up `~/.kaggle/kaggle.json`, OR download the CSV manually 
 - `pipeline.py` – data load, outlier clipping, preprocessing, training, saving, prediction
 - `app.py` – Streamlit UI
 - `model_pipeline.pkl` / `model_meta.json` – created after training
+
+link "https://credit-card-fraud-detection-system-hc7rpmp6bgtygpjmtkawfv.streamlit.app/"
