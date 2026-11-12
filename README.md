@@ -1,72 +1,31 @@
-# Credit Card Fraud Detection
+# Credit Card Fraud Detection — Streamlit App
 
-## 📌 Overview
+## Run locally
+```bash
+cd credit_fraud_app
+python -m venv venv
+# Windows: venv\Scripts\activate    |  Mac/Linux: source venv/bin/activate
+pip install -r requirements.txt
 
-This project develops a **Machine Learning-based Credit Card Fraud Detection system** to identify potentially fraudulent transactions using transactional and behavioral features.
+# (optional) pre-train from terminal — otherwise use the "Train" page in the app
+python pipeline.py --fast          # quick: notebook's best RF params
+python pipeline.py                 # full GridSearch (slower)
+python pipeline.py --csv my.csv    # use a local CSV instead of Kaggle
 
-The project covers the complete ML workflow, including **data preprocessing, exploratory data analysis, feature transformation, model training, hyperparameter tuning, evaluation, model serialization, and API deployment**.
+streamlit run app.py               # opens http://localhost:8501
+```
 
----
+## Dataset
+Auto-downloaded via `kagglehub` (miadul/credit-card-fraud-detection-dataset) and cached to `data/`.
+If download fails: set up `~/.kaggle/kaggle.json`, OR download the CSV manually and upload it in the app sidebar.
 
-## 🎯 Objective
+## Pages
+- **Data & EDA** – stats, missing values, skew, class balance, distributions, boxplots, correlation
+- **Train & Evaluate** – 4-model CV comparison, tuned Random Forest, confusion matrix, feature importance
+- **Predict Transaction** – form + fraud-probability gauge with adjustable threshold
+- **Batch Prediction** – upload CSV, score all rows, download results
 
-The main objective is to build a reliable classification model capable of distinguishing between **legitimate and fraudulent credit card transactions**.
-
-The dataset contains **10,000 transactions** with features such as:
-
-- Transaction amount
-- Transaction hour
-- Merchant category
-- Foreign transaction indicator
-- Location mismatch
-- Device trust score
-- Transaction velocity
-- Cardholder age
-- Fraud label
-
----
-
-## 🛠️ Technologies Used
-
-- **Python**
-- **Pandas**
-- **NumPy**
-- **Matplotlib**
-- **Seaborn**
-- **Scikit-learn**
-- **Joblib**
-- **FastAPI**
-- **Uvicorn**
-
----
-
-## 🔄 Project Workflow
-
-```text
-Dataset
-   ↓
-Data Cleaning & EDA
-   ↓
-Feature Selection
-   ↓
-Preprocessing
-   ↓
-ColumnTransformer
-   ↓
-Train/Test Split
-   ↓
-Model Training
-   ↓
-Cross-Validation
-   ↓
-GridSearchCV
-   ↓
-Best Model Selection
-   ↓
-Model Evaluation
-   ↓
-Joblib Serialization
-   ↓
-FastAPI Deployment
-   ↓
-Fraud Prediction API
+## Files
+- `pipeline.py` – data load, outlier clipping, preprocessing, training, saving, prediction
+- `app.py` – Streamlit UI
+- `model_pipeline.pkl` / `model_meta.json` – created after training
